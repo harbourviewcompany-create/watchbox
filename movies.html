@@ -34,7 +34,7 @@
 <script src="common.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const movies = content.filter(i => i.type === "movie").sort((a, b) => b.rating - a.rating);
+  const movies = content.filter(i => i.type === "movie").sort((a, b) => (b.rating || 0) - (a.rating || 0));
   const grid = document.getElementById("movies-grid");
   movies.forEach(item => grid.appendChild(createCard(item)));
 });
