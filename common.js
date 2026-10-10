@@ -33,7 +33,7 @@ function createCard(item) {
   title.textContent = item.title;
   const meta = document.createElement("div");
   meta.className = "card-meta";
-  meta.textContent = [item.year, item.runtime || (typeof item.rating === "number" ? "★ " + item.rating : "")].filter(Boolean).join(" · ");
+  meta.textContent = [item.year, typeof item.rating === "number" ? "★ " + item.rating : "", item.runtime || (item.seasons ? item.seasons + " seasons" : "")].filter(Boolean).join(" · ");
   card.append(art, title, meta);
   return card;
 }
