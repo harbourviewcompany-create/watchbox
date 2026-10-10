@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WatchBox — Home</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,24 +12,30 @@
   <a href="index.html" class="logo">WatchBox</a>
   <nav class="nav-links">
     <a href="index.html">Home</a>
+    <a href="full-movies.html">Full Movies</a>
     <a href="movies.html">Movies</a>
     <a href="tv.html">TV Shows</a>
   </nav>
   <div class="search-wrap">
-    <input type="search" id="search" placeholder="Search titles..." autocomplete="off">
+    <input type="search" id="search" aria-label="Search titles" placeholder="Search titles..." autocomplete="off">
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-content">
-    <h1>Inception</h1>
-    <p>A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.</p>
-    <a href="detail.html?id=1" class="btn">▶ Watch Trailer</a>
-    <a href="detail.html?id=1" class="btn secondary">More Info</a>
+    <div class="eyebrow">FREE FULL-LENGTH FEATURE • 82 MIN</div>
+    <h1>Sita Sings the Blues</h1>
+    <p>An acclaimed animated musical feature by Nina Paley, available to watch in full right here on WatchBox.</p>
+    <a href="watch.html?id=90001" class="btn">▶ Watch Full Movie</a>
+    <a href="detail.html?id=90001" class="btn secondary">More Info</a>
   </div>
 </section>
 
 <main>
+  <section class="section">
+    <div class="section-heading"><h2 class="section-title">Full Movies — Play Now</h2><a href="full-movies.html" class="see-all">See all →</a></div>
+    <div class="row" id="row-full"></div>
+  </section>
   <section class="section">
     <h2 class="section-title">Trending Now</h2>
     <div class="row" id="row-trending"></div>
@@ -49,15 +55,18 @@
 </main>
 
 <script src="data.js"></script>
+<script src="streaming.js"></script>
 <script src="common.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  const full = content.filter(hasFullMovie);
   const trending = content.filter(i => i.trending);
   const movies = content.filter(i => i.type === "movie").slice(0, 12);
   const tv = content.filter(i => i.type === "tv").slice(0, 10);
   const scifi = content.filter(i => i.genres.some(g => ["Sci-Fi", "Fantasy", "Adventure"].includes(g))).slice(0, 12);
 
   const rows = {
+    "row-full": full,
     "row-trending": trending,
     "row-movies": movies,
     "row-tv": tv,
