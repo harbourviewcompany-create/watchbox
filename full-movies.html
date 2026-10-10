@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WatchBox — Full Movies</title>
+<meta name="description" content="Watch complete, legitimately available feature films for free on WatchBox.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="header">
+  <a href="index.html" class="logo">WatchBox</a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="full-movies.html">Full Movies</a>
+    <a href="movies.html">Movies</a>
+    <a href="tv.html">TV Shows</a>
+  </nav>
+  <div class="search-wrap"><input type="search" id="search" aria-label="Search titles" placeholder="Search titles..." autocomplete="off"></div>
+</header>
+<main class="full-movies-page">
+  <div class="page-heading">
+    <div class="eyebrow">THE WATCHBOX CINEMA</div>
+    <h1>Full movies. Ready to watch.</h1>
+    <p>Complete films you can play here — not just previews. We feature creator-authorized releases and titles we have permission to stream.</p>
+  </div>
+  <div class="grid" id="full-movies-grid"></div>
+  <p class="availability-note">Other titles in the catalog are for discovery and trailers until an authorized full-length video is available.</p>
+</main>
+<script src="data.js"></script>
+<script src="streaming.js"></script>
+<script src="common.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var grid = document.getElementById("full-movies-grid");
+  content.filter(hasFullMovie).forEach(function (film) { grid.appendChild(createCard(film)); });
+});
+</script>
+</body>
+</html>
