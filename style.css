@@ -172,3 +172,74 @@ header.scrolled { background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); 
   .grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
   .detail-hero { height: 50vh; padding-bottom: 40px; }
 }
+
+
+/* Full-film cinema experience */
+.eyebrow, .watch-kicker {
+  color: #ff7b80;
+  font-weight: 800;
+  letter-spacing: .12em;
+  font-size: .73rem;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero {
+  background: linear-gradient(90deg, rgba(0,0,0,.96) 4%, rgba(0,0,0,.72) 54%, rgba(0,0,0,.18) 100%),
+              url('https://archive.org/services/img/Sita_Sings_the_Blues') center/cover no-repeat;
+}
+.btn:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.nav-links a.active { color: #ff575f; }
+.section-heading { display:flex; align-items:center; justify-content:space-between; padding-right:4%; gap:12px; }
+.see-all { color:#ff9499; font-size:.85rem; font-weight:700; white-space:nowrap; margin-bottom:12px; }
+.see-all:hover, .source-link:hover { text-decoration:underline; }
+.card { display:block; position:relative; min-width:0; }
+.card-art { position:relative; width:100%; aspect-ratio:2/3; border-radius:8px; background:linear-gradient(145deg,#30212b,#101321); overflow:hidden; }
+.card-art img, .grid .card-art img { width:100%; height:100%; object-fit:cover; border-radius:0; position:relative; z-index:1; }
+.card-art .poster-fallback { position:absolute; inset:16px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:1rem; font-weight:700; color:#fff; }
+.watch-pill { position:absolute; z-index:2; bottom:10px; left:9px; right:9px; padding:7px 9px; border-radius:5px; background:rgba(229,9,20,.94); color:#fff; text-align:center; font-size:.69rem; font-weight:800; letter-spacing:.03em; }
+.card:hover .card-art { outline:1px solid rgba(255,255,255,.4); }
+.card:focus-visible { outline:2px solid #fff; outline-offset:4px; }
+.full-movies-page { padding:116px 0 60px; min-height:100vh; }
+.page-heading { padding:0 4% 32px; max-width:830px; }
+.page-heading h1 { font-size:clamp(2rem,5vw,3.8rem); line-height:1.08; margin:0 0 18px; letter-spacing:-.03em; }
+.page-heading p { color:#bababa; font-size:1rem; max-width:650px; }
+.availability-note { color:var(--muted); padding:4px 4% 24px; max-width:800px; font-size:.9rem; }
+.watch-body { background:#070709; }
+.watch-page { max-width:1320px; margin:auto; min-height:100vh; padding:112px 4% 55px; }
+.back-link { color:#cacaca; font-weight:600; display:inline-block; margin-bottom:22px; font-size:.9rem; }
+.back-link:hover { color:white; }
+.watch-title { font-size:clamp(1.5rem,3vw,2.6rem); margin-bottom:20px; line-height:1.15; }
+.watch-kicker { color:#fb7077; }
+.player-stage { background:#000; aspect-ratio:16/9; width:100%; position:relative; border:1px solid #292929; border-radius:12px; overflow:hidden; box-shadow:0 18px 70px rgba(0,0,0,.5); }
+.player-stage iframe, .player-stage video { width:100%; height:100%; display:block; border:0; background:#000; }
+.watch-details { margin:22px 0 36px; max-width:850px; }
+.watch-details p { color:#c6c6c6; line-height:1.65; }
+.watch-details .rights-note { font-size:.83rem; color:#999; margin-top:10px; }
+.source-link, .rights-note a { display:inline-block; color:#ff989c; font-size:.9rem; margin-top:12px; text-decoration:underline; text-underline-offset:3px; }
+.watch-error { padding:60px 22px; background:#181818; border-radius:10px; margin-bottom:26px; }
+.watch-error h1 { margin-bottom:12px; font-size:1.8rem; }
+.watch-error p { color:#aaa; }
+.watch-related .section-title { margin-left:0; }
+.watch-related .row { padding-left:0; }
+@media (max-width:600px) {
+  header { display:grid; grid-template-columns:auto minmax(0,1fr); row-gap:9px; column-gap:8px; padding:9px 13px; background:rgba(8,8,8,.96); }
+  .logo { grid-row:1; grid-column:1; font-size:1.35rem; }
+  .nav-links { grid-row:2; grid-column:1/-1; display:flex; gap:18px; overflow-x:auto; white-space:nowrap; scrollbar-width:none; font-size:.86rem; padding-bottom:3px; }
+  .nav-links::-webkit-scrollbar { display:none; }
+  .search-wrap { grid-row:1; grid-column:2; justify-self:end; margin:0; min-width:0; width:min(100%,180px); }
+  #search, #search:focus { width:100%; max-width:180px; }
+  .page-header { padding-top:120px; }
+  .hero { min-height:470px; height:66svh; padding:115px 5% 43px; }
+  .hero h1 { font-size:2.25rem; }
+  .hero p { font-size:.94rem; }
+  .btn { padding:10px 14px; font-size:.9rem; margin-bottom:6px; }
+  .full-movies-page { padding-top:134px; }
+  .watch-page { padding:133px 3% 40px; }
+  .player-stage { border-radius:6px; }
+  .watch-title { margin-bottom:16px; }
+  .watch-details { padding:0 2%; }
+  .detail-hero { padding-top:105px; min-height:440px; }
+  #detail-main { padding-top:105px !important; }
+  .card-art img, .grid .card-art img { height:100%; }
+  .watch-pill { font-size:.6rem; padding:5px 3px; }
+}
