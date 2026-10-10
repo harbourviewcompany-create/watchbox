@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WatchBox — Search</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">WatchBox</a>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="movies.html">Movies</a>
+    <a href="tv.html">TV Shows</a>
+  </nav>
+  <div class="search-wrap">
+    <input type="search" id="search" placeholder="Search titles..." autocomplete="off">
+  </div>
+</header>
+
+<div class="page-header">
+  <h1 id="search-title">Search Results</h1>
+</div>
+
+<main>
+  <div class="grid" id="search-grid"></div>
+</main>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const q = (getParam("q") || "").toLowerCase().trim();
+  const titleEl = document.getElementById("search-title");
+  const grid = document.getElementById("search-grid");
+
+  if (!q) {
+    titleEl.textContent = "Search";
+    grid.innerHTML = `<div class="empty">Enter a title or keyword above.</div>`;
+    return;
+  }
+
+  titleEl.textContent = `Results for “${q}”`;
+  const results = content.filter(item =>
+    item.title.toLowerCase().includes(q) ||
+    item.description.toLowerCase().includes(q) ||
+    item.genres.some(g => g.toLowerCase().includes(q))
+  );
+
+  if (results.length === 0) {
+    grid.innerHTML = `<div class="empty">No titles found matching “${q}”.</div>`;
+  } else {
+    results.forEach(item => grid.appendChild(createCard(item)));
+  }
+
+  document.getElementById("search").value = q;
+});
+</script>
+</body>
+</html>

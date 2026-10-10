@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WatchBox — Detail</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">WatchBox</a>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="movies.html">Movies</a>
+    <a href="tv.html">TV Shows</a>
+  </nav>
+  <div class="search-wrap">
+    <input type="search" id="search" placeholder="Search titles..." autocomplete="off">
+  </div>
+</header>
+
+<main id="detail-main" style="padding-top: 70px;">
+  <!-- Filled by JS -->
+</main>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const id = parseInt(getParam("id"));
+  const item = content.find(c => c.id === id);
+  const main = document.getElementById("detail-main");
+
+  if (!item) {
+    main.innerHTML = `<div class="empty"><h2>Title not found</h2><p><a href="index.html">Back to Home</a></p></div>`;
+    return;
+  }
+
+  document.title = `WatchBox — ${item.title}`;
+
+  const metaParts = [
+    item.year,
+    item.type === "movie" ? "Movie" : "TV Series",
+    `★ ${item.rating}`,
+    item.runtime || (item.seasons ? `${item.seasons} season${item.seasons > 1 ? "s" : ""}` : ""),
+    item.genres.join(" · ")
+  ].filter(Boolean);
+
+  const related = content
+    .filter(c => c.id !== item.id && c.genres.some(g => item.genres.includes(g)))
+    .slice(0, 10);
+
+  main.innerHTML = `
+    <section class="detail-hero" style="background-image: linear-gradient(to top, var(--bg) 0%, transparent 60%), url('${item.backdrop || item.poster}')">
+      <div class="detail-content">
+        <h1 class="detail-title">${item.title}</h1>
+        <div class="detail-meta">${metaParts.join(" · ")}</div>
+        <p class="detail-desc">${item.description}</p>
+        ${item.trailer ? `<a href="#trailer" class="btn">▶ Play Trailer</a>` : ""}
+      </div>
+    </section>
+    ${item.trailer ? `
+    <div class="trailer-wrap" id="trailer">
+      <iframe src="https://www.youtube.com/embed/${item.trailer}?rel=0" allowfullscreen></iframe>
+    </div>` : ""}
+    ${related.length ? `
+    <section class="related section">
+      <h2 class="section-title">More Like This</h2>
+      <div class="row" id="related-row"></div>
+    </section>` : ""}
+  `;
+
+  if (related.length) {
+    const row = document.getElementById("related-row");
+    related.forEach(r => row.appendChild(createCard(r)));
+  }
+});
+</script>
+</body>
+</html>

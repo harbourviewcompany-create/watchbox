@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WatchBox — Movies</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="header">
+  <a href="index.html" class="logo">WatchBox</a>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="movies.html">Movies</a>
+    <a href="tv.html">TV Shows</a>
+  </nav>
+  <div class="search-wrap">
+    <input type="search" id="search" placeholder="Search titles..." autocomplete="off">
+  </div>
+</header>
+
+<div class="page-header">
+  <h1>All Movies</h1>
+</div>
+
+<main>
+  <div class="grid" id="movies-grid"></div>
+</main>
+
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const movies = content.filter(i => i.type === "movie").sort((a, b) => b.rating - a.rating);
+  const grid = document.getElementById("movies-grid");
+  movies.forEach(item => grid.appendChild(createCard(item)));
+});
+</script>
+</body>
+</html>
