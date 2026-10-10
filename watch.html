@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>WatchBox — Watch Full Movie</title>
+<meta name="description" content="Watch a full feature film on WatchBox.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="watch-body">
+<header id="header">
+  <a href="index.html" class="logo">WatchBox</a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="full-movies.html">Full Movies</a>
+    <a href="movies.html">Movies</a>
+    <a href="tv.html">TV Shows</a>
+  </nav>
+  <div class="search-wrap"><input type="search" id="search" aria-label="Search titles" placeholder="Search titles..." autocomplete="off"></div>
+</header>
+<main class="watch-page">
+  <a class="back-link" id="back-link" href="full-movies.html">← Back to full movies</a>
+  <div id="player-area"></div>
+  <section class="watch-details" id="watch-details"></section>
+  <section class="section watch-related">
+    <h2 class="section-title">Watch another full movie</h2>
+    <div class="row" id="watch-related"></div>
+  </section>
+</main>
+<script src="data.js"></script>
+<script src="streaming.js"></script>
+<script src="common.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var params = new URLSearchParams(window.location.search);
+  var idText = params.get("id");
+  var id = idText && /^\d+$/.test(idText) ? Number(idText) : NaN;
+  var film = content.find(function (item) { return item.id === id; });
+  var area = document.getElementById("player-area");
+  if (!hasFullMovie(film)) {
+    var empty = document.createElement("div");
+    empty.className = "watch-error";
+    var title = document.createElement("h1");
+    title.textContent = "Full movie unavailable";
+    var note = document.createElement("p");
+    note.textContent = "This title does not have an authorized full-length stream on WatchBox. Browse the full movie collection instead.";
+    empty.append(title, note);
+    area.appendChild(empty);
+    return;
+  }
+
+  document.title = "WatchBox — " + film.title;
+  document.getElementById("back-link").href = "detail.html?id=" + encodeURIComponent(film.id);
+  document.getElementById("back-link").textContent = "← Back to details";
+
+  var kicker = document.createElement("div");
+  kicker.className = "watch-kicker";
+  kicker.textContent = "● FULL MOVIE • " + film.runtime;
+  var heading = document.createElement("h1");
+  heading.className = "watch-title";
+  heading.textContent = film.title;
+  var stage = document.createElement("div");
+  stage.className = "player-stage";
+  if (film.stream.type === "archive") {
+    var frame = document.createElement("iframe");
+    frame.src = "https://archive.org/embed/" + film.stream.id;
+    frame.title = "Watch the full movie: " + film.title;
+    frame.allow = "autoplay; fullscreen; picture-in-picture";
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    stage.appendChild(frame);
+  } else if (film.stream.type === "video") {
+    var video = document.createElement("video");
+    video.controls = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.src = film.stream.url;
+    if (film.poster) video.poster = film.poster;
+    stage.appendChild(video);
+    // Resume works for native video sources; external Archive embeds manage their own player.
+    var storageKey = "watchbox-position-" + film.id;
+    video.addEventListener("loadedmetadata", function () {
+      try {
+        var saved = Number(localStorage.getItem(storageKey));
+        if (saved > 0 && saved < video.duration - 30) video.currentTime = saved;
+      } catch (err) { /* Private browsing may disallow storage. */ }
+    });
+    video.addEventListener("timeupdate", function () {
+      try { if (Math.floor(video.currentTime) % 5 === 0) localStorage.setItem(storageKey, String(video.currentTime)); } catch (err) {}
+    });
+    video.addEventListener("ended", function () {
+      try { localStorage.removeItem(storageKey); } catch (err) {}
+    });
+  }
+  area.append(kicker, heading, stage);
+
+  var details = document.getElementById("watch-details");
+  var description = document.createElement("p");
+  description.textContent = film.description;
+  details.appendChild(description);
+  if (film.sourceUrl && isSecureVideoUrl(film.sourceUrl)) {
+    var source = document.createElement("a");
+    source.className = "source-link";
+    source.href = film.sourceUrl;
+    source.target = "_blank";
+    source.rel = "noopener noreferrer";
+    source.textContent = "Player not working? Watch at the original source ↗";
+    details.appendChild(source);
+  }
+  if (film.rightsLabel) {
+    var rights = document.createElement("p");
+    rights.className = "rights-note";
+    rights.textContent = film.rightsLabel + ".";
+    if (film.rightsUrl && isSecureVideoUrl(film.rightsUrl)) {
+      var link = document.createElement("a");
+      link.href = film.rightsUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = " Rights details ↗";
+      rights.appendChild(link);
+    }
+    details.appendChild(rights);
+  }
+
+  var related = document.getElementById("watch-related");
+  content.filter(function (item) { return item.id !== film.id && hasFullMovie(item); })
+    .forEach(function (item) { related.appendChild(createCard(item)); });
+});
+</script>
+</body>
+</html>
