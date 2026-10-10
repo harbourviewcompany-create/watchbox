@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WatchBox — Detail</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,11 +12,12 @@
   <a href="index.html" class="logo">WatchBox</a>
   <nav class="nav-links">
     <a href="index.html">Home</a>
+    <a href="full-movies.html">Full Movies</a>
     <a href="movies.html">Movies</a>
     <a href="tv.html">TV Shows</a>
   </nav>
   <div class="search-wrap">
-    <input type="search" id="search" placeholder="Search titles..." autocomplete="off">
+    <input type="search" id="search" aria-label="Search titles" placeholder="Search titles..." autocomplete="off">
   </div>
 </header>
 
@@ -25,6 +26,7 @@
 </main>
 
 <script src="data.js"></script>
+<script src="streaming.js"></script>
 <script src="common.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
