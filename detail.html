@@ -32,6 +32,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const id = parseInt(getParam("id"));
   const item = content.find(c => c.id === id);
+  const validTrailer = /^[a-zA-Z0-9_-]{11}$/.test(item?.trailer || "") ? item.trailer : "";
   const main = document.getElementById("detail-main");
 
   if (!item) {
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const metaParts = [
     item.year,
     item.type === "movie" ? "Movie" : "TV Series",
-    `★ ${item.rating}`,
+    typeof item.rating === "number" ? `★ ${item.rating}` : "",
     item.runtime || (item.seasons ? `${item.seasons} season${item.seasons > 1 ? "s" : ""}` : ""),
     item.genres.join(" · ")
   ].filter(Boolean);
@@ -56,15 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
   main.innerHTML = `
     <section class="detail-hero" style="background-image: linear-gradient(to top, var(--bg) 0%, transparent 60%), url('${item.backdrop || item.poster}')">
       <div class="detail-content">
-        <h1 class="detail-title">${item.title}</h1>
-        <div class="detail-meta">${metaParts.join(" · ")}</div>
-        <p class="detail-desc">${item.description}</p>
-        ${item.trailer ? `<a href="#trailer" class="btn">▶ Play Trailer</a>` : ""}
+        <h1 class="detail-title">${escapeHtml(item.title)}</h1>
+        <div class="detail-meta">${escapeHtml(metaParts.join(" · "))}</div>
+        <p class="detail-desc">${escapeHtml(item.description)}</p>
+        ${hasFullMovie(item) ? `<a href="${watchUrl(item)}" class="btn">▶ Watch Full Movie</a>` : ""}
+        ${validTrailer ? `<a href="#trailer" class="btn secondary">▶ Play Trailer</a>` : ""}
       </div>
     </section>
-    ${item.trailer ? `
+    ${validTrailer ? `
     <div class="trailer-wrap" id="trailer">
-      <iframe src="https://www.youtube.com/embed/${item.trailer}?rel=0" allowfullscreen></iframe>
+      <iframe title="Trailer for ${escapeHtml(item.title)}" src="https://www.youtube.com/embed/${validTrailer}?rel=0" loading="lazy" allowfullscreen></iframe>
     </div>` : ""}
     ${related.length ? `
     <section class="related section">
