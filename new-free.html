@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="New and recently released free-to-watch movies in Canada. Legal, ad-supported services and direct provider links.">
+<title>WatchBox — New Free Movies in Canada</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="header">
+  <a href="index.html" class="logo">WatchBox</a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="new-free.html">New &amp; Free</a>
+    <a href="full-movies.html">Full Movies</a>
+    <a href="movies.html">Movies</a>
+    <a href="tv.html">TV Shows</a>
+  </nav>
+  <div class="search-wrap"><input type="search" id="search" aria-label="Search catalog" placeholder="Search titles..." autocomplete="off"></div>
+</header>
+<main class="free-page">
+  <section class="free-intro">
+    <div class="eyebrow">FREE MOVIES · CANADA</div>
+    <h1>New movies.<br>Zero subscription.</h1>
+    <p>Discover newer releases on legitimate free and ad-supported services. Open the movie on its streaming service to watch the complete film.</p>
+    <div class="free-stats"><span id="free-count">Loading movies…</span><span id="free-updated"></span></div>
+  </section>
+  <section class="free-collection" aria-labelledby="free-list-title">
+    <div class="section-heading"><h2 id="free-list-title" class="section-title">Available free movie links</h2></div>
+    <div class="free-toolbar">
+      <label class="free-label" for="free-query">Find a movie
+        <input id="free-query" type="search" placeholder="Title, genre or description..." autocomplete="off">
+      </label>
+      <label class="free-label" for="free-provider">Streaming service
+        <select id="free-provider"><option value="">All providers</option></select>
+      </label>
+      <label class="free-label" for="free-sort">Sort by
+        <select id="free-sort">
+          <option value="newest">Newest release</option>
+          <option value="title">Title A–Z</option>
+        </select>
+      </label>
+    </div>
+    <p class="free-note">Movie links open the official provider or an availability page. Canada availability and advertisements may vary. These titles are not hosted by WatchBox.</p>
+    <div class="grid free-grid" id="free-grid" aria-live="polite"></div>
+    <p id="free-error" class="free-error" hidden></p>
+  </section>
+  <footer class="free-footer"><p>Streaming availability data, when configured, is supplied by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDB</a> and <a href="https://www.justwatch.com/ca" target="_blank" rel="noopener noreferrer">JustWatch</a>. WatchBox is not endorsed or certified by TMDB.</p><p>Some films link directly to Tubi. The service controls availability and playback.</p></footer>
+</main>
+<script src="data.js"></script>
+<script src="streaming.js"></script>
+<script src="common.js"></script>
+<script src="free-movies.js"></script>
+</body>
+</html>
