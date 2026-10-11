@@ -12,6 +12,7 @@
   <a href="index.html" class="logo">WatchBox</a>
   <nav class="nav-links">
     <a href="index.html">Home</a>
+    <a href="new-free.html">New &amp; Free</a>
     <a href="full-movies.html">Full Movies</a>
     <a href="movies.html">Movies</a>
     <a href="tv.html">TV Shows</a>
@@ -32,6 +33,13 @@
 </section>
 
 <main>
+  <section class="section">
+    <div class="section-heading">
+      <h2 class="section-title">New &amp; Free in Canada</h2>
+      <a href="new-free.html" class="see-all">Browse free movies →</a>
+    </div>
+    <div class="row" id="row-new-free"><p class="free-loading">Loading the latest free movie links…</p></div>
+  </section>
   <section class="section">
     <div class="section-heading"><h2 class="section-title">Full Movies — Play Now</h2><a href="full-movies.html" class="see-all">See all →</a></div>
     <div class="row" id="row-full"></div>
@@ -57,6 +65,7 @@
 <script src="data.js"></script>
 <script src="streaming.js"></script>
 <script src="common.js"></script>
+<script src="free-movies.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const full = content.filter(hasFullMovie);
